@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 import {Image, ImageBackground, StyleSheet, View} from 'react-native';
 import TopSection from './Sections/TopSection';
 import InstructerSec from './Sections/InstructerSec';
+import HorizontalBar from './tools/HorizontalBar';
+import ScoreViewer from './Sections/ScoreViewer';
 
 export const Home = () => {
   const [tutorialMode, setTutorialMode] = useState(true);
-  const [selectedTutorial,setSelectedTutorial]=useState<any>(null)
-  
+  const [selectedTutorial, setSelectedTutorial] = useState<any>(null);
+
   function selectTutorial(selected: string) {
     switch (selected) {
       case 'account':
@@ -41,23 +43,50 @@ export const Home = () => {
         break;
     }
   }
-  
+
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../assets/images/bg.png')}
+        source={require('../assets/images/game-bg.png')}
         style={styles.background}>
         <View style={{height: '15%', width: '100%'}}>
           <TopSection />
         </View>
         {tutorialMode && (
-          <Image
-            source={selectedTutorial}
-            style={styles.overlayImage}
-          />
+          <Image source={selectedTutorial} style={styles.overlayImage} />
         )}
         <View style={styles.instructorContainer}>
-          <InstructerSec selectTutorial={selectTutorial}/>
+          <InstructerSec selectTutorial={selectTutorial} />
+        </View>
+        <ScoreViewer/>
+        <View style={styles.HorizontalBarContainer}>
+          <HorizontalBar
+            progress={50}
+            width={''}
+            label={''}
+            barType={''}
+            barColor={''}
+            textColor={''}
+            progressedColor={'#FFD700'}
+          />
+          <HorizontalBar
+            progress={24}
+            width={''}
+            label={''}
+            barType={''}
+            barColor={''}
+            textColor={''}
+            progressedColor={'#FFD700'}
+          />
+          <HorizontalBar
+            progress={50}
+            width={''}
+            label={''}
+            barType={''}
+            barColor={''}
+            textColor={''}
+            progressedColor={'#FFD700'}
+          />
         </View>
       </ImageBackground>
     </View>
@@ -83,7 +112,7 @@ const styles = StyleSheet.create({
     left: 0,
     width: '100%',
     height: '100%',
-    zIndex: 1,
+    zIndex: 2,
   },
   instructorContainer: {
     position: 'absolute',
@@ -94,6 +123,11 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  HorizontalBarContainer:{
+    position:'absolute',
+    left:'50%',
+    top:'30%',
+  }
 });
 
 export default Home;

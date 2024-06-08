@@ -14,12 +14,12 @@ export default function TopSection() {
         resizeMode="stretch">
         <TopleftSection />
       </ImageBackground>
-      <ImageBackground
+     { <ImageBackground
         source={require('../../assets/images/rectangle22.png')}
         style={styles.top_middle_back}
         resizeMode="stretch">
         <TopMidSection />
-      </ImageBackground>
+      </ImageBackground>}
       <ImageBackground
         source={require('../../assets/images/rectangle21.png')}
         style={styles.top_right_back}
