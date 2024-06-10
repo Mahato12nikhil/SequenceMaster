@@ -127,7 +127,6 @@ const styles = StyleSheet.create({
   tutorial_back: {
     height:'70%',
     width:'100%',
-    
   },
   tutorial_back_text:{
     color:COLOR_WHITE,

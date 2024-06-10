@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Image, ImageBackground, StyleSheet, View} from 'react-native';
+import React, { useState } from 'react';
+import { Image, ImageBackground, StyleSheet, View } from 'react-native';
 import TopSection from './Sections/TopSection';
 import InstructerSec from './Sections/InstructerSec';
 import HorizontalBar from './tools/HorizontalBar';
@@ -49,17 +49,19 @@ export const Home = () => {
       <ImageBackground
         source={require('../assets/images/game-bg.png')}
         style={styles.background}>
-        <View style={{height: '15%', width: '100%'}}>
+        <View style={{ height: '15%', width: '100%' }}>
           <TopSection />
         </View>
         {tutorialMode && (
           <Image source={selectedTutorial} style={styles.overlayImage} />
         )}
+        <View style={styles.scoreViewContainer}>
+          <ScoreViewer />
+        </View>
         <View style={styles.instructorContainer}>
           <InstructerSec selectTutorial={selectTutorial} />
         </View>
-        <ScoreViewer/>
-        <View style={styles.HorizontalBarContainer}>
+        <View style={styles.horizontalBarContainer}>
           <HorizontalBar
             progress={50}
             width={''}
@@ -118,16 +120,22 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '40%',
     left: '50%',
-    zIndex: 2,
-    transform: [{translateY: -50}],
+    zIndex: 6,
+    transform: [{ translateY: -50 }],
     width: '100%',
     height: '100%',
   },
-  HorizontalBarContainer:{
-    position:'absolute',
-    left:'50%',
-    top:'30%',
-  }
+  horizontalBarContainer: {
+    position: 'absolute',
+    left: '50%',
+    top: '30%',
+  },
+  scoreViewContainer: {
+    position: 'absolute',
+    left: '7%',
+    top: '30%',
+    zIndex: 5,
+  },
 });
 
 export default Home;
