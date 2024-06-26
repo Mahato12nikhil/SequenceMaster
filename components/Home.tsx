@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
-import { Image, ImageBackground, StyleSheet, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Image, ImageBackground, Platform, Pressable, StyleSheet, View } from 'react-native';
 import TopSection from './Sections/TopSection';
 import InstructerSec from './Sections/InstructerSec';
 import HorizontalBar from './tools/HorizontalBar';
 import ScoreViewer from './Sections/ScoreViewer';
+import LowerScoreBar from './Sections/LowerScoreBar';
+import { useDispatch } from 'react-redux';
+import { fetchGameData } from '../state/reducers/GameReducer';
 
 export const Home = () => {
   const [tutorialMode, setTutorialMode] = useState(true);
   const [selectedTutorial, setSelectedTutorial] = useState<any>(null);
-
+  const dispatch=useDispatch()
+  useEffect(() => {
+    dispatch(fetchGameData())
+  }, [dispatch])
+  
   function selectTutorial(selected: string) {
     switch (selected) {
       case 'account':
@@ -45,32 +52,35 @@ export const Home = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} >
       <ImageBackground
         source={require('../assets/images/game-bg.png')}
         style={styles.background}>
         <View style={{ height: '15%', width: '100%' }}>
           <TopSection />
         </View>
+        
+        
         {tutorialMode && (
           <Image source={selectedTutorial} style={styles.overlayImage} />
         )}
         <View style={styles.scoreViewContainer}>
           <ScoreViewer />
         </View>
-        <View style={styles.instructorContainer}>
-          <InstructerSec selectTutorial={selectTutorial} />
-        </View>
-        <View style={styles.horizontalBarContainer}>
-          <HorizontalBar
-            progress={50}
-            width={''}
-            label={''}
-            barType={''}
-            barColor={''}
-            textColor={''}
-            progressedColor={'#FFD700'}
-          />
+       
+        <View style={[styles.horizontalBarContainer]}>
+          <View style={{marginBottom:15}}>
+            <HorizontalBar
+              progress={50}
+              width={''}
+              label={''}
+              barType={''}
+              barColor={''}
+              textColor={''}
+              progressedColor={'#FFD700'}
+            />
+          </View>
+          <View style={{marginBottom:15}}>
           <HorizontalBar
             progress={24}
             width={''}
@@ -80,6 +90,8 @@ export const Home = () => {
             textColor={''}
             progressedColor={'#FFD700'}
           />
+          </View>
+          <View style={{marginBottom:15}}>
           <HorizontalBar
             progress={50}
             width={''}
@@ -89,12 +101,20 @@ export const Home = () => {
             textColor={''}
             progressedColor={'#FFD700'}
           />
+          </View>
         </View>
+        <View style={{ height: '25%', width: '100%', }}>
+          <LowerScoreBar/>
+        </View>
+        {!tutorialMode && <View style={styles.instructorContainer}>
+          <InstructerSec selectTutorial={selectTutorial} />
+        </View>}
+       
       </ImageBackground>
     </View>
   );
 };
-
+const isIOS = Platform.OS === 'ios';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -105,7 +125,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    justifyContent: 'flex-start',
+    justifyContent:'space-between',
     alignItems: 'center',
   },
   overlayImage: {
@@ -120,21 +140,24 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '40%',
     left: '50%',
-    zIndex: 6,
     transform: [{ translateY: -50 }],
     width: '100%',
     height: '100%',
+    zIndex: 10,
   },
   horizontalBarContainer: {
     position: 'absolute',
+    width:'100%',
+    height:'100%',
     left: '50%',
-    top: '30%',
+    top: '35%',
+    zIndex: 2,
   },
   scoreViewContainer: {
     position: 'absolute',
     left: '7%',
     top: '30%',
-    zIndex: 5,
+    zIndex: 1,
   },
 });
 

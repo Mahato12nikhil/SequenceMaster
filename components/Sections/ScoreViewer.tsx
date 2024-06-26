@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import Svg, { Circle, ClipPath, Defs, Image, Polygon } from 'react-native-svg';
+import {View, StyleSheet, Text} from 'react-native';
+import Svg, {Circle, ClipPath, Defs, Image, Polygon} from 'react-native-svg';
 import VerticalBar from '../tools/VerticalBar';
 
 const ScoreViewer = () => {
-  const barsData = ['10%','20%','80%','100%']; 
+  const barsData = ['10%', '20%', '80%', '60%'];
+  const overs = ['5-10', '11-15', '16-20', '21-30'];
+  const runs = [10, 20, 80, 100];
   return (
     <View style={styles.container}>
       <View style={styles.circleWrapper}>
@@ -35,8 +37,9 @@ const ScoreViewer = () => {
       </View>
       <View style={styles.barsContainer}>
         {barsData.map((height, index) => (
-          <View style={{marginRight:20}}><VerticalBar key={index} height={height} /></View>
-          
+          <View style={{marginRight: 30}}>
+            <VerticalBar key={Math.random().toString()} height={height} />
+          </View>
         ))}
       </View>
       <Svg height="40" width="250">
@@ -47,15 +50,63 @@ const ScoreViewer = () => {
           strokeWidth="1"
           strokeLinejoin="round"
         />
+
+        <Text style={styles.teamName}>RBC</Text>
+       
       </Svg>
       <Svg height="40" width="250">
         <Polygon
           points="0,0 250,0 250,40 0,40"
-          fill="black"
+          fill="rgba(28, 28, 18, 1)"
           stroke="yellow"
           strokeWidth="1"
           strokeLinejoin="round"
         />
+        <View style={{flexDirection: 'column'}}>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={[
+                {color: 'rgba(192, 142, 107, 1)', fontSize: 12, marginLeft: 3},
+              ]}>
+              Overs
+            </Text>
+            <View style={{flexDirection: 'row', marginTop: 5}}>
+              {overs.map(data => {
+                return (
+                  <Text
+                    style={[
+                      styles.overText,
+                      {color: 'rgba(255,255,255,1)', marginLeft: 18},
+                    ]}>
+                    {data}
+                  </Text>
+                );
+              })}
+            </View>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={[
+                {color: 'rgba(192, 142, 107, 1)', fontSize: 12, marginLeft: 3},
+              ]}>
+              Runs
+            </Text>
+            <View style={{flexDirection: 'row', marginTop: 5}}>
+              {runs.map(data => {
+                return (
+                  <Text
+                    style={[
+                      styles.overText,
+                      {color: 'rgba(255,255,255,1)', marginLeft: 30},
+                    ]}>
+                    {data}
+                  </Text>
+                );
+              })}
+            </View>
+          </View>
+          <View></View>
+        </View>
       </Svg>
     </View>
   );
@@ -74,19 +125,37 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '51%',
     left: -20,
-    zIndex: 5,
+    zIndex: 3,
   },
-  circleContainer: {
-   
-  },
+  circleContainer: {},
   barsContainer: {
-    height:100,
-    width:190,
-    marginLeft:50,
+    height: 100,
+    width: 190,
+    marginLeft: 50,
     flexDirection: 'row',
     alignItems: 'flex-end',
-    marginBottom:2,
+    marginBottom: 2,
   },
+  overText: {
+    fontSize: 10,
+    lineHeight: 10,
+    alignSelf: 'center',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  teamName: {
+    color: 'white',
+    fontFamily: 'JejuGothic',
+    marginLeft: 40,
+    marginTop:'1%',
+    fontSize:25
+  },
+  vsTeam:{
+    fontSize:15,
+    marginLeft:100,
+    color:'white',
+    fontFamily: 'JejuGothic',
+  }
 });
 
 export default ScoreViewer;

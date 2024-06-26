@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 const VerticalBar = ({ height =80}:any) => {
   return (
-    <View style={[styles.container, { height: height }]}>
+    <TouchableOpacity style={[styles.container, { height: height }]} onPressIn={()=>console.log('vertical pressed')}>
       <View style={styles.innerBar} />
-    </View>
+    </TouchableOpacity>
   );
 };
 

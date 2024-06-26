@@ -4,10 +4,12 @@ import {
   ImageBackground,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
+  TouchableOpacity,
+  Pressable
 } from 'react-native';
 import {COLOR_WHITE, COLOR_YELLOW} from '../../utils/constants';
+import {  } from 'react-native-gesture-handler';
 
 export default function InstructerSec({selectTutorial}: any) {
   const [tutorial_text,setTutorialText]=useState('Welcome to Sequence master')
@@ -15,6 +17,7 @@ export default function InstructerSec({selectTutorial}: any) {
 
 
   function handlePress(): void {
+    console.log('clicked')
     switch (tutorial_tag) {
       case '':
         selectTutorial('account');
@@ -90,7 +93,7 @@ export default function InstructerSec({selectTutorial}: any) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.touchable} onPress={handlePress}>
+      <Pressable style={styles.touchable} onPress={handlePress}>
         <ImageBackground
           source={require('../../assets/images/Instruction_text_back.png')}
           style={styles.tutorial_back}
@@ -98,7 +101,7 @@ export default function InstructerSec({selectTutorial}: any) {
           <Text style={styles.tutorial_back_text}>{tutorial_text}</Text>
           <Text style={[styles.tutorial_back_text,{marginTop:'10%'}]}>Tap to continue</Text>
         </ImageBackground>
-      </TouchableOpacity>
+      </Pressable>
       <Image
         style={styles.instructerAvatar}
         source={require('../../assets/images/instructer.png')}
@@ -118,11 +121,12 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   touchable:{
+    flex:1,
     height: '50%',
     width: '80%',
     position: 'absolute',
     left: 0,
-    zIndex: 1,
+
   },
   tutorial_back: {
     height:'70%',
@@ -137,7 +141,6 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
     height: '70%',
     marginLeft: '60%',
-    zIndex: 2,
     marginBottom: '40%',
   },
 });

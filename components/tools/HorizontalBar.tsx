@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {View, StyleSheet, Animated, Text} from 'react-native';
+import {View, StyleSheet, Animated, Text, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 const HorizontalBar = ({
@@ -27,7 +27,7 @@ const HorizontalBar = ({
   });
 
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={()=>{console.log('horizontal')}}>
       <Animated.View
         style={[
           styles.progressed,
@@ -47,14 +47,14 @@ const HorizontalBar = ({
        <Text>{progress}%</Text>
         <Text>1.2 Bonus</Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     width: 300,
-    height: 30,
+    height: 35,
     borderRadius: 10,
     borderWidth: 1,
     backgroundColor: '#FFFF00',
@@ -70,10 +70,10 @@ const styles = StyleSheet.create({
   progressText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#FFF', // Main text color
-    textShadowColor: '#000', // Shadow color (border color)
-    textShadowOffset: { width: -1, height: 1 }, // Offset for shadow (border)
-    textShadowRadius: 1, // Radius for shadow blur
+    color: '#FFF', 
+    textShadowColor: '#000', 
+    textShadowOffset: { width: -1, height: 1 }, 
+    textShadowRadius: 1, 
   },
   textAlign: {
     width: '100%',
