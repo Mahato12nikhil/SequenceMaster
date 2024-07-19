@@ -2,9 +2,10 @@ import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import Svg, {Circle, ClipPath, Defs, Image, Polygon} from 'react-native-svg';
 import VerticalBar from '../tools/VerticalBar';
+import { COLOR_YELLOW } from '../../utils/constants';
 
 const ScoreViewer = () => {
-  const barsData = ['10%', '20%', '80%', '60%'];
+  const barsData = ['10%', '20%', '80%', '100%'];
   const overs = ['5-10', '11-15', '16-20', '21-30'];
   const runs = [10, 20, 80, 100];
   return (
@@ -42,6 +43,9 @@ const ScoreViewer = () => {
           </View>
         ))}
       </View>
+      <View>
+        
+      </View>
       <Svg height="40" width="250">
         <Polygon
           points="0,0 120,0 130,5 220,5 250,40 0,40"
@@ -70,7 +74,7 @@ const ScoreViewer = () => {
               ]}>
               Overs
             </Text>
-            <View style={{flexDirection: 'row', marginTop: 5}}>
+            <View style={{flexDirection: 'row'}}>
               {overs.map(data => {
                 return (
                   <Text
@@ -114,18 +118,15 @@ const ScoreViewer = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignContent: 'flex-start',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
+    marginLeft:20,
+    height:'auto',
+    width:250,
   },
   circleWrapper: {
-    position: 'absolute',
-    top: '51%',
-    left: -20,
-    zIndex: 3,
+    position:'absolute',
+    top:'52%',
+    left:-20,
+    zIndex:1
   },
   circleContainer: {},
   barsContainer: {
@@ -140,7 +141,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     lineHeight: 10,
     alignSelf: 'center',
-    textAlign: 'center',
     fontWeight: 'bold',
   },
   teamName: {

@@ -6,17 +6,19 @@ import HorizontalBar from './tools/HorizontalBar';
 import ScoreViewer from './Sections/ScoreViewer';
 import LowerScoreBar from './Sections/LowerScoreBar';
 import { useDispatch } from 'react-redux';
-import { fetchGameData } from '../state/reducers/GameReducer';
+import { fetchGameData } from '../state/reducers/GameSlice';
+import Game from './game/Game';
+import Login from './login/Login';
 
 export const Home = () => {
-  const [tutorialMode, setTutorialMode] = useState(true);
+  const [tutorialMode, setTutorialMode] = useState(false);
   const [selectedTutorial, setSelectedTutorial] = useState<any>(null);
   const dispatch=useDispatch()
   useEffect(() => {
-    dispatch(fetchGameData())
+    //dispatch(fetchGameData())
   }, [dispatch])
   
-  function selectTutorial(selected: string) {
+   function selectTutorial(selected: string) {
     switch (selected) {
       case 'account':
         setSelectedTutorial(require('../assets/images/tut_account.png'));
@@ -58,54 +60,14 @@ export const Home = () => {
         style={styles.background}>
         <View style={{ height: '15%', width: '100%' }}>
           <TopSection />
-        </View>
-        
-        
+        </View>       
         {tutorialMode && (
           <Image source={selectedTutorial} style={styles.overlayImage} />
         )}
-        <View style={styles.scoreViewContainer}>
-          <ScoreViewer />
+        <View style={{height:'80%',width:'100%',justifyContent:'flex-end'}}>
+          <Game/>
         </View>
        
-        <View style={[styles.horizontalBarContainer]}>
-          <View style={{marginBottom:15}}>
-            <HorizontalBar
-              progress={50}
-              width={''}
-              label={''}
-              barType={''}
-              barColor={''}
-              textColor={''}
-              progressedColor={'#FFD700'}
-            />
-          </View>
-          <View style={{marginBottom:15}}>
-          <HorizontalBar
-            progress={24}
-            width={''}
-            label={''}
-            barType={''}
-            barColor={''}
-            textColor={''}
-            progressedColor={'#FFD700'}
-          />
-          </View>
-          <View style={{marginBottom:15}}>
-          <HorizontalBar
-            progress={50}
-            width={''}
-            label={''}
-            barType={''}
-            barColor={''}
-            textColor={''}
-            progressedColor={'#FFD700'}
-          />
-          </View>
-        </View>
-        <View style={{ height: '25%', width: '100%', }}>
-          <LowerScoreBar/>
-        </View>
         {!tutorialMode && <View style={styles.instructorContainer}>
           <InstructerSec selectTutorial={selectTutorial} />
         </View>}

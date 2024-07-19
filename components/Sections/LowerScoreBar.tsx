@@ -1,37 +1,34 @@
 import React from 'react';
-import {Image, ImageBackground, StyleSheet, View} from 'react-native';
-import {Text} from 'react-native';
+import { Image, ImageBackground, StyleSheet, View } from 'react-native';
+import { Text } from 'react-native';
+import { COLOR_YELLOW } from '../../utils/constants';
 
 export default function LowerScoreBar() {
   return (
-    <View style={{marginTop: 5}}>
-      <View style={styles.imgcontainer}>
-        <View style={{marginLeft: '15%', marginTop: 15}}>
-          <Image source={require('../../assets/images/scoreviewdiag.png')} />
-        </View>
-        <Image
-          source={require('../../assets/images/straightbar.png')}
-          resizeMode="cover"
-          style={styles.image}
-        />
-      </View>
-      <View style={{position: 'absolute', zIndex: 4, left: '19%', top: '6%'}}>
+    <View style={{ }}>
+      <View style={styles.imgcontainer}></View>
+      <View style={{ zIndex: 1 }}>
         <ImageBackground
           source={require('../../assets/images/scoreback.png')}
           resizeMode="stretch"
-          style={{
-            height: 40,
-            marginLeft: '3%',
-            padding: 5,
-            paddingBottom: 5,
-            alignItems: 'center',
-            justifyContent:'center'
-          }}>
-          <Text style={{color: 'white'}}>234-4</Text>
+          style={styles.scoreBack}
+        >
+          <Text style={styles.scoreText}>234-4</Text>
         </ImageBackground>
       </View>
+      <View style={styles.scoreViewDiagContainer}>
+        <Image
+          source={require('../../assets/images/scoreviewdiag.png')}
+          style={styles.scoreViewDiag}
+        />
+      </View>
+      <Image
+        source={require('../../assets/images/straightbar.png')}
+        resizeMode="cover"
+        style={styles.image}
+      />
       <View style={styles.lowerPortion}>
-        {/*design to be done for lower portion*/}
+        {/* Design to be done for lower portion */}
       </View>
     </View>
   );
@@ -40,8 +37,23 @@ export default function LowerScoreBar() {
 const styles = StyleSheet.create({
   imgcontainer: {
     width: '100%',
-    alignItems: 'flex-start',
-    marginBottom: '10%',
+  },
+  scoreBack: {
+    width: 100,
+    height: 40,
+    marginLeft: '13%',
+  },
+  scoreText: {
+    color: 'white',
+    marginLeft:30,
+    marginTop:10
+  },
+  scoreViewDiagContainer: {
+    marginLeft: '10%',
+    marginTop: -33, 
+  },
+  scoreViewDiag: {
+    zIndex: 0,
   },
   image: {
     width: '100%',
@@ -49,9 +61,7 @@ const styles = StyleSheet.create({
   lowerPortion: {
     height: 45,
     width: '100%',
-    backgroundColor: 'blue',
-    position: 'absolute',
-    top: '40%',
-    zIndex: 2,
+    backgroundColor: 'black',
+    marginTop: -2, 
   },
 });
