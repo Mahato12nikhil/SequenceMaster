@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     position:'absolute',
     top:'52%',
     left:-20,
-    zIndex:1
+    zIndex:1,
   },
   circleContainer: {},
   barsContainer: {

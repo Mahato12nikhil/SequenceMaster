@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {COLOR_WHITE, COLOR_YELLOW} from '../../utils/constants';
 import {  } from 'react-native-gesture-handler';
+import { Tutorials } from '../utility/Interfaces';
 
 export default function InstructerSec({selectTutorial}: any) {
   const [tutorial_text,setTutorialText]=useState('Welcome to Sequence master')
@@ -20,62 +21,62 @@ export default function InstructerSec({selectTutorial}: any) {
     console.log('clicked')
     switch (tutorial_tag) {
       case '':
-        selectTutorial('account');
+        selectTutorial(Tutorials.ACCOUNT);
         setTutorialText(`You can tap 'Account' to login with your phone number`);
-        setTutorialTag('account');
+        setTutorialTag(Tutorials.ACCOUNT);
         break;
-      case 'account':
+      case Tutorials.ACCOUNT:
         selectTutorial('none');
         setTutorialText(`After successful login you will receive welcome bonus`);
-        setTutorialTag('postaccount');
+        setTutorialTag(Tutorials.POST_ACCOUNT);
         break;
-      case 'postaccount':
-        selectTutorial('mail');
+      case Tutorials.POST_ACCOUNT:
+        selectTutorial(Tutorials.MAIL);
         setTutorialText(`Tap 'Mail' to claim the welcome bonus`);
-        setTutorialTag('mail');
+        setTutorialTag(Tutorials.MAIL);
         break;
-      case 'mail':
-        selectTutorial('bonus_money');
+      case Tutorials.MAIL:
+        selectTutorial(Tutorials.BONUS_MONEY);
         setTutorialText(`The bonus money in your wallet will be shown here`);
-        setTutorialTag('bonus_money');
+        setTutorialTag(Tutorials.BONUS_MONEY);
         break;
-      case 'bonus_money':
-        selectTutorial('real_money');
+      case Tutorials.BONUS_MONEY:
+        selectTutorial(Tutorials.REAL_MONEY);
         setTutorialText(`The real money in your wallet will be shown here`);
-        setTutorialTag('real_money');
+        setTutorialTag(Tutorials.REAL_MONEY);
         break;
-      case 'real_money':
-        selectTutorial('add_money');
+      case Tutorials.REAL_MONEY:
+        selectTutorial(Tutorials.ADD_MONEY);
         setTutorialText(`You can add money from here`);
-        setTutorialTag('add_money');
+        setTutorialTag(Tutorials.ADD_MONEY);
         break;
-      case 'add_money':
-        selectTutorial('wallet');
+      case Tutorials.ADD_MONEY:
+        selectTutorial(Tutorials.EVENT);
         setTutorialText(`You can withdraw money from your wallet`);
-        setTutorialTag('wallet');
+        setTutorialTag(Tutorials.EVENT);
         break;
-      case 'wallet':
-        selectTutorial('event');
+      case Tutorials.WALLET:
+        selectTutorial(Tutorials.EVENT);
         setTutorialText(`You will find the latest event and announcement here`);
-        setTutorialTag('event');
+        setTutorialTag(Tutorials.EVENT);
         break;
-      case 'event':
-        selectTutorial('game');
+      case Tutorials.EVENT:
+        selectTutorial(Tutorials.GAME);
         setTutorialText(`Let's start a game with the bonus money you have received`);
-        setTutorialTag('game');
+        setTutorialTag(Tutorials.GAME);
         break;
-      case 'game':
-        selectTutorial('game');
+      case Tutorials.GAME:
+        selectTutorial(Tutorials.GAME);
         setTutorialText(`Alternatively you can use real money from your account if you have already recharged`);
         setTutorialTag('postgame');
         break;
       case 'postgame':
-        selectTutorial('game');
+        selectTutorial(Tutorials.GAME);
         setTutorialText(`In every match, you will see three numbers and you have to guess the fourth one...`);
         setTutorialTag('postgame_2');
         break;
       case 'postgame_2':
-        selectTutorial('game');
+        selectTutorial(Tutorials.GAME);
         setTutorialText(`You will be given three answers per question, but you can only choose one of them`);
         setTutorialTag('postgame_3');
         break;

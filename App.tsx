@@ -8,6 +8,8 @@ import Login from './components/login/Login';
 import Game from './components/game/Game';
 import LowerScoreBar from './components/Sections/LowerScoreBar';
 import ScoreViewer from './components/Sections/ScoreViewer';
+import CircularFrame from './components/tools/CircularFrame';
+import Launcher from './components/launcher/Launcher';
 
 
 function App() {

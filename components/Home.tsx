@@ -2,49 +2,48 @@ import React, { useEffect, useState } from 'react';
 import { Image, ImageBackground, Platform, Pressable, StyleSheet, View } from 'react-native';
 import TopSection from './Sections/TopSection';
 import InstructerSec from './Sections/InstructerSec';
-import HorizontalBar from './tools/HorizontalBar';
-import ScoreViewer from './Sections/ScoreViewer';
-import LowerScoreBar from './Sections/LowerScoreBar';
 import { useDispatch } from 'react-redux';
-import { fetchGameData } from '../state/reducers/GameSlice';
 import Game from './game/Game';
+import Launcher from './launcher/Launcher';
 import Login from './login/Login';
+import { HomeView, Tutorials } from './utility/Interfaces';
+
 
 export const Home = () => {
-  const [tutorialMode, setTutorialMode] = useState(false);
-  const [selectedTutorial, setSelectedTutorial] = useState<any>(null);
-  const dispatch=useDispatch()
+  const [tutorialMode, setTutorialMode] = useState(true);
+  const [selectedTutorial, setSelectedTutorial] = useState<any>(require('../assets/images/tut_account.png'));
+  const [homeView, setHomeView] = useState<HomeView>(HomeView.UNDEFINED);
+  const dispatch = useDispatch()
   useEffect(() => {
     //dispatch(fetchGameData())
   }, [dispatch])
-  
-   function selectTutorial(selected: string) {
+  function selectTutorial(selected: Tutorials) {
     switch (selected) {
-      case 'account':
+      case Tutorials.ACCOUNT:
         setSelectedTutorial(require('../assets/images/tut_account.png'));
         break;
-      case 'postaccount':
+      case Tutorials.POST_ACCOUNT:
         setSelectedTutorial(require('../assets/images/tut_account.png'));
         break;
-      case 'mail':
+      case Tutorials.MAIL:
         setSelectedTutorial(require('../assets/images/tut_mail.png'));
         break;
-      case 'bonus_money':
+      case Tutorials.BONUS_MONEY:
         setSelectedTutorial(require('../assets/images/tut_money.png'));
         break;
-      case 'real_money':
+      case Tutorials.REAL_MONEY:
         setSelectedTutorial(require('../assets/images/tut_money.png'));
         break;
-      case 'add_money':
+      case Tutorials.ADD_MONEY:
         setSelectedTutorial(require('../assets/images/tut_add_money.png'));
         break;
-      case 'wallet':
+      case Tutorials.WALLET:
         setSelectedTutorial(require('../assets/images/tut_withdrawl.png'));
         break;
-      case 'event':
+      case Tutorials.EVENT:
         setSelectedTutorial(require('../assets/images/tut_event.png'));
         break;
-      case 'game':
+      case Tutorials.GAME:
         setSelectedTutorial(require('../assets/images/tut_game.png'));
         break;
       default:
@@ -52,7 +51,6 @@ export const Home = () => {
         break;
     }
   }
-
   return (
     <View style={styles.container} >
       <ImageBackground
@@ -60,18 +58,20 @@ export const Home = () => {
         style={styles.background}>
         <View style={{ height: '15%', width: '100%' }}>
           <TopSection />
-        </View>       
+        </View>
         {tutorialMode && (
           <Image source={selectedTutorial} style={styles.overlayImage} />
         )}
-        <View style={{height:'80%',width:'100%',justifyContent:'flex-end'}}>
-          <Game/>
+        <View style={{ height: '80%', width: '100%', justifyContent: 'flex-end' }}>
+          {homeView === HomeView.LOGIN && <Login />}
+          {homeView === HomeView.LAUNCHER && <Launcher />}
+          {homeView === HomeView.GAME && <Game />}
         </View>
-       
-        {!tutorialMode && <View style={styles.instructorContainer}>
+
+        {tutorialMode && <View style={styles.instructorContainer}>
           <InstructerSec selectTutorial={selectTutorial} />
         </View>}
-       
+
       </ImageBackground>
     </View>
   );
@@ -87,8 +87,9 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    justifyContent:'space-between',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    zIndex: 5
   },
   overlayImage: {
     position: 'absolute',
@@ -96,7 +97,6 @@ const styles = StyleSheet.create({
     left: 0,
     width: '100%',
     height: '100%',
-    zIndex: 2,
   },
   instructorContainer: {
     position: 'absolute',
@@ -105,21 +105,18 @@ const styles = StyleSheet.create({
     transform: [{ translateY: -50 }],
     width: '100%',
     height: '100%',
-    zIndex: 10,
   },
   horizontalBarContainer: {
     position: 'absolute',
-    width:'100%',
-    height:'100%',
+    width: '100%',
+    height: '100%',
     left: '50%',
     top: '35%',
-    zIndex: 2,
   },
   scoreViewContainer: {
     position: 'absolute',
     left: '7%',
     top: '30%',
-    zIndex: 1,
   },
 });
 

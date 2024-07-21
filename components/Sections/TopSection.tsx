@@ -8,7 +8,7 @@ import GameTopBar from './GameTopBar';
 
 export default function TopSection() {
 
-  const gameMode=true
+  const gameMode=false
   return (
     <View style={styles.top_container}>
       {gameMode && <View style={{width:'80%',height:'100%'}}><GameTopBar/></View>}

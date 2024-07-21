@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 40,
     marginLeft: '13%',
+    elevation:-99
   },
   scoreText: {
     color: 'white',
