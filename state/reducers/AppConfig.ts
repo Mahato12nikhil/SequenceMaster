@@ -47,7 +47,7 @@ interface AppConfigState {
     async () => {
       try {
         const {data} = await GetAppConfigAction();
-        showMessage(TAG,data.data)
+        showMessage(TAG,data.data.otpLength)
         if (!data.success) {
           throw new Error('could not fetch app config');
         }

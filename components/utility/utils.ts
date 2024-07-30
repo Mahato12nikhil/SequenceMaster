@@ -1,36 +1,21 @@
-import { Tutorials } from "./Interfaces";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { showToast } from "../../utils/logger";
 
-export function selectTutorial(selected: Tutorials, setSelectedTutorial:any) {
-    switch (selected) {
-      case Tutorials.ACCOUNT:
-        setSelectedTutorial(require('../assets/images/tut_account.png'));
-        break;
-      case Tutorials.POST_ACCOUNT:
-        setSelectedTutorial(require('../assets/images/tut_account.png'));
-        break;
-      case Tutorials.MAIL:
-        setSelectedTutorial(require('../assets/images/tut_mail.png'));
-        break;
-      case Tutorials.BONUS_MONEY:
-        setSelectedTutorial(require('../assets/images/tut_money.png'));
-        break;
-      case Tutorials.REAL_MONEY:
-        setSelectedTutorial(require('../assets/images/tut_money.png'));
-        break;
-      case Tutorials.ADD_MONEY:
-        setSelectedTutorial(require('../assets/images/tut_add_money.png'));
-        break;
-      case Tutorials.WALLET:
-        setSelectedTutorial(require('../assets/images/tut_withdrawl.png'));
-        break;
-      case Tutorials.EVENT:
-        setSelectedTutorial(require('../assets/images/tut_event.png'));
-        break;
-      case Tutorials.GAME:
-        setSelectedTutorial(require('../assets/images/tut_game.png'));
-        break;
-      default:
-        setSelectedTutorial(null);
-        break;
-    }
+
+export async function setAsyncData(key:string, value: string){
+  try {
+    await AsyncStorage.setItem(key, value);
+  } catch (e) {
+    showToast('error in updating','error')
   }
+}
+export const getAsyncData = async (key:string) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    if (value !== null) {
+      return value;
+    }
+  } catch (e) {
+      showToast(`error in getting ${key} data`,'error')
+  }
+};

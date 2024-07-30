@@ -1,5 +1,5 @@
 import React from 'react';
-import { View} from 'react-native';
+import { Pressable, View} from 'react-native';
 import { Circle, Svg, Text as SvgText, Image as SvgImage } from 'react-native-svg';
 
 export interface CircularFrameProps {
@@ -8,15 +8,17 @@ export interface CircularFrameProps {
     fillColor?: string;
     stroke?: string;
     imageUrl?: string;
-    text?: string;
+    amount?: number;
+    onPlayClick: (amount:number,gameType:string) => void,
+    gameType:string
 }
 
-export default function CircularFrame({ height = 100, width = 100, fillColor = 'grey', stroke = '', imageUrl, text ='Play with 5'}: CircularFrameProps) {
+export default function CircularFrame({ height = 100, width = 100, fillColor = 'grey', stroke = '', imageUrl, amount =0,onPlayClick,gameType}: CircularFrameProps) {
 
     const radius = Math.min(Number(height), Number(width)) / 2;
 
     return (
-        <View style={{width: width, height: height, justifyContent: 'center', alignItems: 'center' }}>
+        <Pressable style={{width: width, height: height, justifyContent: 'center', alignItems: 'center' }} onPress={()=>onPlayClick(amount,gameType)}>
             <Svg height={height} width={width}>
                 <Circle
                     cx="50%"
@@ -36,7 +38,7 @@ export default function CircularFrame({ height = 100, width = 100, fillColor = '
                         clipPath="circle"
                     />
                 )}
-                 {text && (
+                 {amount && (
                     <SvgText
                         x="50%"
                         y="50%"
@@ -45,10 +47,10 @@ export default function CircularFrame({ height = 100, width = 100, fillColor = '
                         fontWeight="bold"
                         textAnchor="middle"                    
                     >
-                        {text}
+                        {`play with ${amount}`}
                     </SvgText>
                 )}
             </Svg>
-        </View>
+        </Pressable>
     );
 }

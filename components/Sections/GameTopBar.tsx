@@ -1,12 +1,20 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { COLOR_YELLOW } from '../../utils/constants';
+import { useAppDispatch } from '../../state/UseTypedSelector';
+import { updateHomeView } from '../../state/reducers/Screen';
+import { HomeView } from '../utility/Interfaces';
 
 export default function GameTopBar() {
+  const dispatch=useAppDispatch()
     const arr=[1,2,3,4,5,6]
+  function onExitPress(): void {
+    dispatch(updateHomeView(HomeView.LAUNCHER))
+  }
+
   return (
     <View style={styles.container}>
       <View
@@ -35,7 +43,7 @@ export default function GameTopBar() {
           </View>
         </View>
         <View style={{flexDirection: 'row'}}>
-          <View style={styles.exitContainer}>
+          <Pressable style={styles.exitContainer} onPress={onExitPress}>
             <Text style={{fontWeight: 'bold', color: 'black', padding: 2}}>
               Exit stadium
             </Text>
@@ -45,7 +53,7 @@ export default function GameTopBar() {
               color="#000"
               style={{textAlign: 'center', margin: 2}}
             />
-          </View>
+          </Pressable>
           <MaterialIcons
             size={50}
             name="error"

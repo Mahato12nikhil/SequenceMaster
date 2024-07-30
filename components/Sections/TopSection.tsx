@@ -6,9 +6,11 @@ import TopRightSection from './TopRightSection';
 import TopMidSection from './TopMidSection';
 import GameTopBar from './GameTopBar';
 
-export default function TopSection() {
+interface TopSectionProps {
+  gameMode: boolean;
+}
+ export const TopSection:React.FC<TopSectionProps>=({gameMode}) =>{
 
-  const gameMode=false
   return (
     <View style={styles.top_container}>
       {gameMode && <View style={{width:'80%',height:'100%'}}><GameTopBar/></View>}

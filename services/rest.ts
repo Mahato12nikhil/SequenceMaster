@@ -9,10 +9,10 @@ export default class RestService {
     this.client = axios.create(config);
 
     const reqHandler = (cfg: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-      // const { token } = store.getState().token ||undefined;
-      // const phone = store.getState().user.userDetail?.phone;
+      const { token } = store.getState().token ||undefined;
+      const phone = store.getState().user.userDetail?.phone;
       let url = cfg.url;
-      //   if (url) {
+      // if (url) {
       //     if (url.includes('?')) {
       //       url = `${url}&code=${FUNCTION_APP_KEY}`;
       //     } else {
@@ -27,12 +27,9 @@ export default class RestService {
       cfg.headers = new AxiosHeaders();
       
       
-      //  if (token) {
-      //    if (!cfg.headers) {
-      //      cfg.headers = {};
-      //    }
-      //     cfg.headers.Authorization = `Bearer ${token}`;
-      //  }
+       if (token) {
+          cfg.headers.Authorization = `Bearer ${token}`;
+       }
       
       return cfg;
     };

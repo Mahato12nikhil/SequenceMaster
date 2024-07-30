@@ -23,5 +23,7 @@ export enum Tutorials{
     ADD_MONEY='ADD_MONEY',
     WALLET='WALLET',
     EVENT='EVENT',
-    GAME='GAME'
+    GAME='GAME',
+    BONUS_CLAIM='BONUS_CLAIM'
+
 }
