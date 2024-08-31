@@ -5,7 +5,7 @@ export const showMessage=(tag:string,messsage:string)=>{
     console.log(tag+': '+messsage)
 }
 
-export const showToast = (message: string,type:string) => {
+export const showToast = (message: string,type:any) => {
       Toast.show({
         type: type, // or 'error', 'info'
         position: 'bottom', // or 'bottom'

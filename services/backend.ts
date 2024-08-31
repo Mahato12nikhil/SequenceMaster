@@ -33,6 +33,7 @@ export const PingWebSocketServer = async (url: string) => {
   };
   export const EnterGameAction = (amount: number,gameType:string) => {
     const payload = {actionType: ACTION_TYPES.ENTER_GAME, amount,gameType};
+    console.log(baseURL);
     return getClient().post(baseURL, payload);
   };
   

@@ -1,20 +1,25 @@
-import React, { useEffect, useReducer, useRef } from 'react'
-import { StyleSheet, View } from 'react-native'
-import HorizontalBar from '../tools/HorizontalBar'
-import ScoreViewer from '../Sections/ScoreViewer'
-import LowerScoreBar from '../Sections/LowerScoreBar'
-import { COLOR_YELLOW } from '../../utils/constants'
-import { useAppDispatch, useAppSelector } from '../../state/UseTypedSelector'
-import { useFocusEffect } from '@react-navigation/native'
-import { showMessage, showToast } from '../../utils/logger'
-import { io, Socket } from 'socket.io-client'
-import { DefaultEventsMap } from '@socket.io/component-emitter'
-import { ACTION_TYPES, initialState, questionReducer } from './reducer'
-import { SubmitAnswerResponse, updateBalanceDelta, updateBalanceHideTs } from '../../state/reducers/WalletSlice'
-import { backButtonHandler, handleAppStateChange } from '../../utils/helper'
-import { useInterval } from '../../hooks'
-import { leaveGame } from '../../state/reducers/GameSlice'
-import { hasBalance } from '../../utils/utilFns'
+import React, {useEffect, useReducer, useRef} from 'react';
+import {StyleSheet, View} from 'react-native';
+import HorizontalBar from '../tools/HorizontalBar';
+import ScoreViewer from '../Sections/ScoreViewer';
+import LowerScoreBar from '../Sections/LowerScoreBar';
+import {COLOR_YELLOW} from '../../utils/constants';
+import {useAppDispatch, useAppSelector} from '../../state/UseTypedSelector';
+import {useFocusEffect} from '@react-navigation/native';
+import {showMessage, showToast} from '../../utils/logger';
+import {io, Socket} from 'socket.io-client';
+import {DefaultEventsMap} from '@socket.io/component-emitter';
+import {ACTION_TYPES, initialState, questionReducer} from './reducer';
+import {
+  SubmitAnswerResponse,
+  updateBalanceDelta,
+  updateBalanceHideTs,
+} from '../../state/reducers/WalletSlice';
+import {backButtonHandler, handleAppStateChange} from '../../utils/helper';
+import {useInterval} from '../../hooks';
+import {leaveGame} from '../../state/reducers/GameSlice';
+import {hasBalance} from '../../utils/utilFns';
+import OptionsView from './OptionsView';
 
 export default function Game() {
   const [localState, localDispatch] = useReducer(questionReducer, initialState);
@@ -46,9 +51,9 @@ export default function Game() {
   }, [localState.initializing, localState.timeLeft]);
 
   useEffect(() => {
-    showMessage('','gameJoinSocketUrl: '+gameJoinSocketUrl)
+    showMessage('', 'gameJoinSocketUrl: ' + gameJoinSocketUrl);
     if (!gameJoinSocketUrl) {
-      showToast('Game socket URL not found','error');
+      showToast('Game socket URL not found', 'error');
       return;
     }
     const socket = io(gameJoinSocketUrl);
@@ -56,19 +61,21 @@ export default function Game() {
     const wss = webSocket.current;
     wss.on('connect', () => {
       localDispatch({type: ACTION_TYPES.CONNECTED});
-      showToast('connected to server','success');
+      showToast('connected to server', 'success');
     });
     wss.on('connect_error', _err => {
       console.log(_err);
       showToast('Could not connect to server', 'error');
     });
-    wss.on('disconnect', _reason => showToast('Disconnected from server','error'));
+    wss.on('disconnect', _reason =>
+      showToast('Disconnected from server', 'error'),
+    );
     wss.on(webSocketQuestionTopic, (data: any) => {
       //appDispatch(hideBalanceDelta());
       localDispatch({type: ACTION_TYPES.QUESTION_RECEIVED, payload: data});
     });
     return () => {
-     //appDispatch(hideBalanceDelta());
+      //appDispatch(hideBalanceDelta());
       appDispatch(leaveGame(gameToken));
       wss.disconnect();
     };
@@ -84,11 +91,11 @@ export default function Game() {
     localDispatch({type: ACTION_TYPES.OPTION_SELECTED});
     const answerCallback = (res: SubmitAnswerResponse) => {
       if (res.insufficientBalance) {
-        showToast('Insufficient balance','error');
+        showToast('Insufficient balance', 'error');
       } else if (res.invalidToken) {
-        showToast('Invalid game token','error');
+        showToast('Invalid game token', 'error');
       } else if (res.isTimeout) {
-        showToast('Answer not saved! Timeout.','error');
+        showToast('Answer not saved! Timeout.', 'error');
       } else {
         localDispatch({type: ACTION_TYPES.SET_ANSWER_RESPONSE, payload: res});
       }
@@ -105,59 +112,28 @@ export default function Game() {
     }
   };
   return (
-    <View style={{ }}>
+    <View style={{}}>
       <View style={styles.scoreViewContainer}>
-        <ScoreViewer />
+        <ScoreViewer questionSequence={localState.questionSequence} questionType={localState.questionType} />
         <View style={[styles.horizontalBarContainer]}>
-          <View style={{ marginBottom: 15 }}>
-            <HorizontalBar
-              progress={50}
-              width={''}
-              label={''}
-              barType={''}
-              barColor={''}
-              textColor={''}
-              progressedColor={'#FFD700'}
-            />
-          </View>
-          <View style={{ marginBottom: 15 }}>
-            <HorizontalBar
-              progress={24}
-              width={''}
-              label={''}
-              barType={''}
-              barColor={''}
-              textColor={''}
-              progressedColor={'#FFD700'}
-            />
-          </View>
-          <View style={{ marginBottom: 15 }}>
-            <HorizontalBar
-              progress={50}
-              width={''}
-              label={''}
-              barType={''}
-              barColor={''}
-              textColor={''}
-              progressedColor={'#FFD700'}
-            />
-          </View>
+          <OptionsView
+            questionId={localState.questionId}
+            options={localState.optionsKey}
+            onOptionSelected={onOptionSelected}></OptionsView>
         </View>
       </View>
-      <View style={{marginTop:10}}>
+      <View style={{marginTop: 10}}>
         <LowerScoreBar />
       </View>
-
     </View>
-  )
+  );
 }
 const styles = StyleSheet.create({
   scoreViewContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   horizontalBarContainer: {
-
     height: 'auto',
   },
-})
+});

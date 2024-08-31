@@ -1,6 +1,7 @@
 import {BALANCE_DECIMAL_PRECISION} from './config';
 import {store as reduxStore} from '../state/store';
 import { GAMETYPE } from './constants';
+import { Platform } from 'react-native';
 
 export function roundTwoDecimalPlace(n: number) {
   if (typeof n !== 'number') {
@@ -36,3 +37,21 @@ export function hasBalance(amount: number, gameType:string): boolean {
     return reduxStore.getState().wallet.balance >= amount;
   return reduxStore.getState().wallet.virtualBalance>=amount;
 }
+export function generateOversArray(totalOvers: number): string[] {
+  const oversArray: string[] = [];
+  let start=0;
+  let end=0;
+  for (let i = 0; i < 4; i++) {
+      start=end+1;
+      end=start+totalOvers-1;
+      oversArray.push(`${start}-${end}`);
+  }
+
+  return oversArray;
+}
+export const reWriteUrl = (url:string) => {
+  if (url.includes('localhost') && Platform.OS=='android') {
+    return url.replace('localhost', '10.0.2.2');
+  }
+  return url;
+};

@@ -2,12 +2,16 @@ import {SubmitAnswerResponse} from '../../state/reducers/WalletSlice';
 
 import {store as reduxStore} from '../../state/store';
 import { OVERLAY_MSG_BALANCE, OVERLAY_MSG_CHECKING_ANS, OVERLAY_MSG_INITIALIZING, OVERLAY_MSG_WAIT } from '../../utils/constants';
+import { showMessage } from '../../utils/logger';
 
 export type QuestionState = {
   roundId: number;
   questionId: number;
   questionText: string;
+  questionType: string;
+  questionSequence: string;
   options: any[];
+  optionsKey:any[]
   previousSolution: string;
   prevCorrectOption: string;
   showOverlay: boolean;
@@ -16,7 +20,6 @@ export type QuestionState = {
   timeLeft: number;
   answerResp: SubmitAnswerResponse | null;
 };
-
 export enum ACTION_TYPES {
   DECREMENT_TIMER,
   SHOW_OVERLAY_TIMER_FINISH,
@@ -38,6 +41,9 @@ export const initialState: QuestionState = {
   questionId: 0,
   questionText: '',
   options: [],
+  optionsKey:[],
+  questionType:'',
+  questionSequence:'',
   previousSolution: '',
   prevCorrectOption: '',
   showOverlay: true,
@@ -81,6 +87,9 @@ export function questionReducer(state: QuestionState, action: ActionType) {
       const questionId = action.payload.questionId;
       const questionText = action.payload.question;
       const options = action.payload.options;
+      const optionsKey = action.payload.optionsKey;
+      const questionType = action.payload.questionType;
+      const questionSequence = action.payload.questionSequence;
       const previousSolution = action.payload.previousSolution;
       const prevCorrectOption = action.payload.previousCorrectOption;
       const showOverlay = false;
@@ -92,6 +101,9 @@ export function questionReducer(state: QuestionState, action: ActionType) {
         questionId,
         questionText,
         options,
+        optionsKey,
+        questionType,
+        questionSequence,
         previousSolution,
         prevCorrectOption,
         showOverlay,

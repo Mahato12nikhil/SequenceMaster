@@ -1,6 +1,8 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import { EnterGameAction, LeaveGameAction } from '../../services/backend';
 import { showMessage } from '../../utils/logger';
+import { Platform } from 'react-native';
+import { reWriteUrl } from '../../utils/utilFns';
 
 
 export interface GameState {
@@ -58,6 +60,7 @@ const gameSlice = createSlice({
       state.gameJoinSocketUrl = '';
       state.gameToken = '';
       state.gameType=''
+      console.log('url')
     });
     builder.addCase(enterGame.rejected, state => {
       state.loading = false;
@@ -67,7 +70,9 @@ const gameSlice = createSlice({
       state.loading = false;
       state.selectedAmount = action.payload.selectedAmount;
       state.gameToken = action.payload.gameToken;
-      state.gameJoinSocketUrl = action.payload.gameJoinSocketUrl;
+      const url= action.payload.gameJoinSocketUrl;
+      //localhost
+      state.gameJoinSocketUrl = reWriteUrl(url);
       state.gameType=action.payload.gameType
       console.log(state.gameJoinSocketUrl)
     });

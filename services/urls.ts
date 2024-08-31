@@ -1,4 +1,8 @@
-export const baseURL='http://192.168.1.5:7071/api/sequenceMakerAction'
+import { Platform } from "react-native";
+import { reWriteUrl } from "../utils/utilFns";
+ 
+export const baseURL=reWriteUrl(`http://localhost:7071/api/sequenceMakerAction`)
+
 export const ACTION_TYPES = {
     VERSION_CHECK: 'VERSION_CHECK',
     APP_CONFIG: 'APP_CONFIG',

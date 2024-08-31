@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { showMessage } from "../../utils/logger";
 import { GetAppConfigAction } from "../../services/backend";
+import { reWriteUrl } from "../../utils/utilFns";
 const TAG='AppConfig slice'
 interface AppConfigState {
     appConfigLoaded: boolean;
@@ -78,7 +79,7 @@ interface AppConfigState {
         state.termCondUrl = action.payload.termCondUrl;
         state.playOptionAmounts = action.payload.playOptionAmounts;
         state.gameJoinSocketUrl = action.payload.gameJoinSocketUrl;
-        state.webSocketServerPingUrl = action.payload.webSocketServerPingUrl;
+        state.webSocketServerPingUrl =reWriteUrl(action.payload.webSocketServerPingUrl);
         state.webSocketQuestionTopic = action.payload.webSocketQuestionTopic;
         state.webSocketAnswerTopic = action.payload.webSocketAnswerTopic;
         state.playStoreUrl = action.payload.playStoreUrl;

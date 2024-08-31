@@ -34,9 +34,9 @@ export default function Launcher() {
               throw new Error('expected text response "pong!"');
             }
             dispatch(enterGame({amount, gameType}));
-          } catch (err) {
+          } catch (err:any) {
             setLoading(false);
-            showMessage('','Not able to connect to web socket server');
+            throw new Error(err);
           }
     }
     useEffect(() => {

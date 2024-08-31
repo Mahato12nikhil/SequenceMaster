@@ -1,42 +1,54 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, StyleSheet, Animated, Text, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-
-const HorizontalBar = ({
-  progress,
-  width,
-  barType,
-  textColor,
-  label,
-  barColor = '#FFFF00',
-  progressedColor = '#FFD700',
-}: HorizontalBarProps) => {
+import { COLOR_WHITE } from '../../utils/constants';
+interface HorizontalBarProps{
+  progress: number;
+  width: number;
+  barType: 'horizontal' | 'vertical';
+  key: number;
+  questionId: number;
+  optionId: number;
+  textColor: string;
+  label: string;
+  barColor?: string;
+  progressedColor?: string;
+  onPress: (optionId: number) => void;
+}
+const HorizontalBar = (props: HorizontalBarProps) => {
   const progressAnim = useRef(new Animated.Value(0)).current;
-
+  const [clicked, setClicked] = useState(false);
   useEffect(() => {
     Animated.timing(progressAnim, {
-      toValue: progress,
+      toValue: props.progress,
       duration: 500, 
       useNativeDriver: false,
     }).start();
-  }, [progress]);
+  }, [props.progress]);
 
   const progressInterpolate = progressAnim.interpolate({
     inputRange: [0, 100],
     outputRange: [0, 300],
   });
+  useEffect(() => {
+    setClicked(false);
+  }, [props.questionId, props.optionId, props.label]);
 
+  const onPress = () => {
+    setClicked(true);
+    props.onPress(props.optionId);
+  };
   return (
-    <Pressable style={styles.container} onPress={()=>{console.log('horizontal')}}>
+  <Pressable style={[styles.container,clicked && {backgroundColor: COLOR_WHITE}]} onPress={()=>{console.log('horizontal')}}>
       <Animated.View
         style={[
           styles.progressed,
-          {width: progressInterpolate, backgroundColor: progressedColor},
+          {width: progressInterpolate, backgroundColor: props.progressedColor},
         ]}
       />
       <View style={styles.textAlign}>
         <View style={{flexDirection: 'row'}}>
-         <Text>Higher</Text>
+         <Text>{props.label}</Text>
           <Icon
             name="arrowup"
             size={20}
@@ -44,7 +56,7 @@ const HorizontalBar = ({
             style={{height: 20}}
           />
         </View>
-       <Text>{progress}%</Text>
+       <Text>{props.progress}%</Text>
         <Text>1.2 Bonus</Text>
       </View>
     </Pressable>

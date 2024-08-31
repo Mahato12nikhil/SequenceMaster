@@ -3,11 +3,18 @@ import {View, StyleSheet, Text} from 'react-native';
 import Svg, {Circle, ClipPath, Defs, Image, Polygon} from 'react-native-svg';
 import VerticalBar from '../tools/VerticalBar';
 import { COLOR_YELLOW } from '../../utils/constants';
+import { generateOversArray } from '../../utils/utilFns';
+import { useAppSelector } from '../../state/UseTypedSelector';
 
-const ScoreViewer = () => {
+ interface ScoreViewProps{
+  questionType:string,
+  questionSequence:string
+}
+const ScoreViewer = (props:ScoreViewProps) => {
   const barsData = ['10%', '20%', '80%', '100%'];
-  const overs = ['5-10', '11-15', '16-20', '21-30'];
-  const runs = [10, 20, 80, 100];
+  //const overs = ['5-10', '11-15', '16-20', '21-30'];
+  const overs =generateOversArray(5);
+  const runs = [10, 20, 80, 100];//props.questionSequence.split(',').map(Number);
   return (
     <View style={styles.container}>
       <View style={styles.circleWrapper}>
@@ -38,7 +45,7 @@ const ScoreViewer = () => {
       </View>
       <View style={styles.barsContainer}>
         {barsData.map((height, index) => (
-          <View style={{marginRight: 30}}>
+          <View style={{width:45,alignItems:'center'}}>
             <VerticalBar key={Math.random().toString()} height={height} />
           </View>
         ))}
@@ -74,16 +81,18 @@ const ScoreViewer = () => {
               ]}>
               Overs
             </Text>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row',width:180,marginLeft:17,marginTop:5 }}>
               {overs.map(data => {
                 return (
+                  <View style={{flex:1,width:45,alignItems:'center'}}>
                   <Text
                     style={[
                       styles.overText,
-                      {color: 'rgba(255,255,255,1)', marginLeft: 18},
+                      {color: 'rgba(255,255,255,1)'},
                     ]}>
                     {data}
                   </Text>
+                  </View>
                 );
               })}
             </View>
@@ -95,16 +104,18 @@ const ScoreViewer = () => {
               ]}>
               Runs
             </Text>
-            <View style={{flexDirection: 'row', marginTop: 5}}>
+            <View style={{flexDirection: 'row', marginTop: 5,width:180,marginLeft:20}}>
               {runs.map(data => {
                 return (
+                  <View style={{flex:1,width:45,alignItems:'center'}}>
                   <Text
                     style={[
                       styles.overText,
-                      {color: 'rgba(255,255,255,1)', marginLeft: 30},
+                      {color: 'rgba(255,255,255,1)'},
                     ]}>
                     {data}
                   </Text>
+                  </View>
                 );
               })}
             </View>
@@ -131,7 +142,7 @@ const styles = StyleSheet.create({
   circleContainer: {},
   barsContainer: {
     height: 100,
-    width: 190,
+    width: 180,
     marginLeft: 50,
     flexDirection: 'row',
     alignItems: 'flex-end',
@@ -139,9 +150,8 @@ const styles = StyleSheet.create({
   },
   overText: {
     fontSize: 10,
-    lineHeight: 10,
-    alignSelf: 'center',
     fontWeight: 'bold',
+    lineHeight:10
   },
   teamName: {
     color: 'white',
